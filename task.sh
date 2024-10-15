@@ -32,20 +32,21 @@ cp -r ./dir2/. ./dir3/dir4
 
 # записываем в task/dir1/summary.txt список файлов с расширением *.txt
 # находящихся в task, включая поддиректории
-find ./ -name "*.txt" -exec echo {} > ./dir1/summary.txt \;
+PATH_summary=./dir1/summary.txt
+find ./ -name "*.txt" > PATH_summary;
 
 # дописываем в task/dir1/summary.txt содержимое task/dir2/list.txt
-cat ./dir2/list.txt >> ./dir1/summary.txt
+cat ./dir2/list.txt >> PATH_summary
 
 # определяем переменную окружения NAME со значением "Всем студентам"
 NAME='Всем студентам'
 
 # запускаем task/dir2/hello.sh с переменной окружения NAME в качестве аргумента
 # вывод скрипта должен дописаться в файл task/dir1/summary.txt
-/bin/bash ./dir2/hello.sh "$NAME" -exec echo {} >> ./dir1/summary.txt
+/bin/bash ./dir2/hello.sh "$NAME" -exec echo {} >> PATH_summary
 
 # перемещаем с переименованием task/dir1/summary.txt в task/Практическое задание
-mv ./dir1/summary.txt ./'Практическое задание'
+mv PATH_summary ./'Практическое задание'
 
 # выводим на консоль содержимое файла task/Практическое задание
 cat 'Практическое задание'
